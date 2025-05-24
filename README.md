@@ -104,6 +104,7 @@ Main marketplace contract managing all trading operations.
 #### Core Data Structures
 
 solidity
+```
 struct Listing {
     address seller;
     uint256 price;
@@ -126,9 +127,11 @@ struct Investment {
     uint256 sharePercentage;
     uint256 timestamp;
 }
+```
 
 Key Functions
 Listing Management
+
 ```listNFT(uint256 tokenId, uint256 price)```
 
 Lists an NFT for sale at specified price
@@ -154,7 +157,8 @@ One-step process for creators
 Returns the new token ID
 
 Offer System
-```makeOffer(uint256 tokenId, uint256 expirationTime, bool isEscrow)````
+
+```makeOffer(uint256 tokenId, uint256 expirationTime, bool isEscrow)```
 
 Make an offer on a listed NFT
 
@@ -183,6 +187,7 @@ Allows buyers to withdraw their offers
 Refunds the offer amount
 
 Investment Features
+
 ```invest(uint256 tokenId, uint256 sharePercentage)```
 
 Invest in an NFT for fractional ownership
@@ -192,6 +197,7 @@ Records investment details
 Emits InvestmentMade event
 
 Security Features
+
 ReentrancyGuard - Prevents reentrancy attacks
 
 Pausable - Emergency stop functionality
@@ -205,6 +211,7 @@ Secure escrow service for protected NFT transactions.
 
 Core Structure
 solidity
+
 ```
 struct EscrowData {
     address seller;        // NFT seller
@@ -249,6 +256,7 @@ ERC721 NFT contract with built-in royalty system and metadata management.
 
 Core Structure
 solidity
+
 ```
 struct NFTInfo {
     address minter;             // Original creator
@@ -264,8 +272,10 @@ struct NFTInfo {
     uint256 totalRoyaltiesEarned; // Cumulative royalties
 }
 ```
+
 Key Functions
-mint(...)
+
+```mint(...)```
 
 Mints new NFT with comprehensive metadata
 
@@ -303,6 +313,7 @@ Integration Guide
 Deployment Sequence
 solidity
 
+```
 // 1. Deploy NFTWithRoyalties
 NFTWithRoyalties nft = new NFTWithRoyalties(
     "My NFT Collection",
@@ -326,21 +337,27 @@ marketplace.initialize(
 
 // 4. Configure Escrow
 escrow.setMarketplaceContract(address(marketplace));
+```
 
 Frontend Integration
 
 Web3 Setup
 javascript
 
+```
 // Contract instances
 const marketplace = new ethers.Contract(marketplaceAddress, marketplaceABI, signer);
 const nft = new ethers.Contract(nftAddress, nftABI, signer);
 const escrow = new ethers.Contract(escrowAddress, escrowABI, signer);
+```
+
 Common Operations
-Mint and List NFT
+
+`Mint and List NFT`
 
 javascript
 
+```
 const tx = await marketplace.mintAndList(
     "NFT Name",
     "SYMBOL",
@@ -364,14 +381,17 @@ const tx = await marketplace.makeOffer(
     { value: ethers.utils.parseEther("0.8") }
 );
 Accept Offer
+```
 
 javascript
-
+```
 const tx = await marketplace.acceptOffer(tokenId, offerIndex);
+```
 Events Reference
 NFTMarketplaceV1 Events
 solidity
 
+```
 event NFTListed(address indexed nftContract, uint256 indexed tokenId, address seller, uint256 price);
 event NFTDelisted(address indexed nftContract, uint256 indexed tokenId, address seller);
 event OfferPlaced(address indexed nftContract, uint256 indexed tokenId, address buyer, uint256 price, bool isEscrow);
@@ -379,16 +399,21 @@ event OfferAccepted(address indexed nftContract, uint256 indexed tokenId, addres
 event OfferRejected(address indexed nftContract, uint256 indexed tokenId, address buyer, uint256 price);
 event OfferWithdrawn(address indexed nftContract, uint256 indexed tokenId, uint256 offerIndex);
 event InvestmentMade(address indexed nftContract, uint256 indexed tokenId, address investor, uint256 amount, uint256 sharePercentage);
+```
 NFTEscrow Events
 solidity
 
+```
 event EscrowCreated(uint256 escrowId, address seller, address buyer, uint256 price);
 event EscrowComplete(uint256 escrowId);
 event EscrowCanceled(uint256 escrowId);
 event MarketplaceContractUpdated(address previousMarketplace, address newMarketplace);
+```
+
 NFTWithRoyalties Events
 solidity
-
+```
 event NFTMinted(uint256 indexed tokenId, address indexed minter, string name, string symbol, uint256 age, string assetType, uint96 royaltyFee);
 event RevenueUpdated(uint256 indexed tokenId, uint256 newRevenue, uint256 newNetProfit);
 event RoyaltyPaid(uint256 indexed tokenId, address indexed recipient, uint256 amount);
+```
