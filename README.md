@@ -103,7 +103,7 @@ Main marketplace contract managing all trading operations.
 
 #### Core Data Structures
 
-```solidity
+solidity
 struct Listing {
     address seller;
     uint256 price;
@@ -125,7 +125,7 @@ struct Investment {
     uint256 amount;
     uint256 sharePercentage;
     uint256 timestamp;
-}```
+}
 
 Key Functions
 Listing Management
